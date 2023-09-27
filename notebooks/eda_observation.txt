@@ -1,0 +1,175 @@
+campaign_disc_ele
+- Remove the field
+
+---
+channel_sales
+- categorical variable
+- missing values : 4218
+- different level are:
+    lmkebamcaaclubfxadlmueccxoimlema
+    foosdfpfkusacimwkcsosbicdxkicaua
+    NaN
+    usilxuppasemubllopkaafesmlibmsdf
+    ewpakwlliwisiwduibdlfmalxowmwpci
+    epumfxlbckeskwekxbiuasklxalciiuu
+    sddiedcslfslkckwlfkdpoeeailfpeds
+    fixdbufsefwooaasfcxdxadsiekoceaa
+- Need to be converter to Categorical
+
+---
+cons_12m
+- no missing values
+- mean: 1.948044e+05 - std: 6.795151e+05
+- skewed at left
+- probably an outlier
+- weird variability - all the data seems to be concerntrated
+- the box from the box plot lead us to consider many value as outlier
+
+---
+cons_gas_12
+- no missing values
+- mean: 3.191164e+04 - std: 1.775885e+05
+- skewed at left
+- probably an outlier
+- weird variability
+- the box from the box plot is really small like for cons_12m
+
+* cons_12m and cons_gas_12 are correlated?
+* is the outlier from cons_12m similar to the one from cons_gas_12m?
+* what is the sales channel of the outlier from cons_12m? what about cons_gas_12m?
+* what can we learn from customer consumption by channel sales
+
+---
+cons_last_month
+- no missing values
+- mean: 1.946154e+04 - std: 8.235676e+04
+- skewed at left
+- probably an outlier
+- box plot show a weird variability
+
+* cons_12m and cons_last_month are correlated?
+* what about cons_last_month per channel_sales?
+* what about cons_last_month with cons_gas_12m? are they correlated?
+*
+
+---
+date_activ
+- no missing value
+- date value
+- need to be converted into date for better manipulation
+
+Questions
+- number of subscription has increased after mid-2009. why? through which channel?
+- the number of subscription has decreased after mid-2010. why? through which channel?
+- what about the new customer after mid-2009? what about the lost customer after mid-2010?
+- what are the connection with the channel sales of the customer with his date of activation?
+
+---
+date_end
+- 2 missing values
+- date value
+- need to be converted into date for better manipulation
+- most the subscription end after 2016
+
+* Is there a relationship between customers ending the same date?
+* Is there a relationship between start of the contract `date_activ` and its end `date_end`?
+* Is there a relationship between the duration of each contract?
+* Do the 2 missing values have are related to customer that have not churn yet?
+* Is there a relationship between ending date of contract and churn attribute? Do customers who have ended their contract are mentioned as churn customers?
+* what is the distance in terms of days between the `date_end` and the date of the last transactipn? date of the first transaction?
+* As most of the customers end their subscription after 2016, do they have the same trends in terms of transactions?
+
+---
+date_first_activ
+- many missing values
+- date value
+- need to be converted into date for better manipulation
+- most of the customer have their first contract after 2010
+
+* What is the duration between the customer `date_first_activ` and `date_activ` ? (relationship)
+* What is the duration between the customer `date_first_activ` and `date_end`? (relationship)
+* Compare the duration for `date_activ` with the electricity consumption of the last 12 month `cons_12m` and also for the last month `cons_last_month`. Is there relationship?
+* Compare the duration for `date_end` with the electricity consumption of the last 12 month `cons_12m` and also for the last month `cons_last_month`. Is there relationship?
+*
+
+---
+date_modif_prod
+- 16096 - 15939 missing values
+- date value
+- need to be converted into date for better manipulation
+
+What do the missing values mean?
+* missed values?
+* those customers have never modified the product? some customers have modified - others not? for which reasons?
+
+* What is the distance between the date of the activation of the contract `date_activ` and the last date of the modification of the product `date_modif_prod` ?
+* What is the distance between the date of the end of the contract `date_end` and the last date of the modification of the product `date_modif_prod` ?
+* What is the distance between the date of the first contract `date_first_activ` and the last date of the modification of the product `date_modif_prod`?
+* Is there a relationship between those 3 different durations ?
+* What are the channel of the customer who has their last date of the modification of the product ?
+* What are the consumption of electricity and gas of customer who has defined the last date of the modification of the product `date_modif_prod`? Is there any relationship for those customers?
+* There is an increase of modification of the product after 2010. Why such an increase? We need to understand why do the company receive request of modification of product and why do the customer want to modify their product
+
+---
+date_renewal
+- 16096 - 16056 missing values
+- date value
+- need to be converted into date for better manipulation
+
+What do the missing values mean?
+- missed values?
+- those customers have never renewed the product? some customers have renewed - others not? for which reasons?
+-
+
+Questions:
+* By looking at the plot for the different date variable, there many activities at the end, toward the last date. We need to plot the different date value and check if there is something we missed
+* Calculate the distance in terms of days between this variable and the other date variable (`date_activ`, `date_end`, `date_first_activ`, `date_modif_prod`). are they correlated?
+* What are the reasons of the different peak of the values?
+* Is there a connection with the channel of sales of the customer?
+
+---
+forecasst_base_bill_ele
+- 3508 missing values
+- mean: 335.843857 - std: 649.406000
+- skewed at left
+
+Questions:
+* why are there missing values? it's a value forecasted meaning that normally it's value from a machine learning process. so why too many missing values?
+* Is it correlated with the customer consumption?
+
+Observations
+- skewed at left
+-
+- potential two outliers
+- many values outside the box. need to use the interval [Q1 - 1.5 * IQR, Q2 + 1.5 * IQR] to check for potential outliers. maybe by fixing the skewness the value will be fixed
+-
+
+---
+forecast_base_bill_year
+- 16096 - 3508 missing values. Exact number of missing values than `forecast_base_bill_ele`.
+- mean: 335.843857 - std: 649.406000
+
+Observations
+- skewed at left
+- many values outside the box. need to use the interval [Q1 - 1.5 * IQR, Q2 + 1.5 * IQR] to check for potential outliers. maybe by fixing the skewness the value will be fixed
+
+Questions:
+- What are the reasons of those missing values?
+- Is it correlated with the previous field `forecast_base_bill_ele`?
+- Is it correlated with the customer consumption?
+
+---
+forecast_bill_12m
+- 16096 - 3508 missing values. Exact number of missing values than `forecast_base_bill_ele`.
+
+Observations
+- like `forecast_base_bill_*`
+- Unlike the previous one, there is one clearly identified outlier
+
+Questions:
+- Same than `forecast_base_bill_*`
+- Is the outlier the same than the one identified previously?
+
+
+
+
