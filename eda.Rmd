@@ -1,0 +1,75 @@
+# Import library
+
+```{r}
+library(tidyverse)
+```
+
+# Training dataset
+
+## Loading the dataset
+
+Load the training data
+```{r}
+training.data <- read.csv('./datasets/ml_case_training_data.csv')
+training.hist.data <- read.csv('./datasets/ml_case_training_hist_data.csv')
+training.output <- read.csv('./datasets/ml_case_training_output.csv')
+```
+
+## Understanding the different dataset
+
+Check the content of the `training.data`
+```{r}
+head(training.data)
+```
+
+Check the shape of the `training.data` dataset
+```{r}
+dim(training.data)
+```
+
+Does it contain one row per client?
+```{r}
+training.data %>% count(id) %>% filter(n > 1)
+```
+
+We can conclude that one row correspond to an unique client.
+
+Check the shape of the `training.hist.data` dataset
+```{r}
+dim(training.hist.data)
+```
+
+This dataset has more rows than the `training.data` dataset.
+Let's check if a client is defined by many or only rows
+```{r}
+training.hist.data %>% count(id) 
+```
+Each client appear `12 times` here.
+After the `group_by` operation, we obtain the same number of rows than the `training.data` dataset.
+Let's check if the both dataset `training.data` and `training.hist.data` contains the same client
+```{r}
+training.hist.id <- training.hist.data %>% count(id) %>% pull(id)
+training.id <- training.data$id
+
+setdiff(training.hist.id, training.id)
+rm(training.hist.id, training.id)
+```
+
+Now do the same check with the `training.output` dataset
+```{r}
+dim(training.output)
+```
+
+Same number of row than the `training.data` dataset
+Let's check if there are identical
+```{r}
+setdiff(training.data$id, training.output$id)
+```
+
+
+We can conclude that the training dataset is about `16096` clients each defined by `40` features.
+
+
+## EDA
+
+
